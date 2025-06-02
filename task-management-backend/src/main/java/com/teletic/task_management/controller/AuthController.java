@@ -73,7 +73,7 @@ public class AuthController {
 
     @PostMapping(path = "/sign-up")
     public ResponseEntity<?> signUpUser(@RequestBody SignUpRequest signUpRequest) throws IOException, JSONException {
-        if (authService.userNameExist(signUpRequest.getEmail())) {
+        if (authService.userNameExist(signUpRequest.getUsername())) {
             return new ResponseEntity<>("user already exists !", HttpStatus.NOT_ACCEPTABLE);
         }
         System.out.println("Sign up request: " + signUpRequest);
