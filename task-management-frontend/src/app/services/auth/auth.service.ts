@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs';
-import { UserStorageService } from '../storage/user-storage.service';
+import { UserStorageService } from './user-storage.service';
 import { environment } from '../../../environments/environment';
 
 @Injectable({

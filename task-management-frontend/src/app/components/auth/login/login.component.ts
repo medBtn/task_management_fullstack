@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth/auth.service';
-import { UserStorageService } from '../../../services/storage/user-storage.service';
+import { UserStorageService } from '../../../services/auth/user-storage.service';
 
 @Component({
   selector: 'app-login',
@@ -36,11 +36,11 @@ export class LoginComponent {
       (res: any) => {
         this.log = JSON.stringify(res);
         if (UserStorageService.isAdminLoggedIn()) {
-          // this.router.navigateByUrl('admin/dashboard');
-          console.log('admin login succeful');
+          this.router.navigateByUrl('admin');
+          console.log('Admin login successful');
         } else if (UserStorageService.isUserLoggedIn()) {
-          // this.router.navigateByUrl('customer/dashboard');
-          console.log('user login succeful');
+          this.router.navigateByUrl('user');
+          console.log('User login successful');
         }
       },
       (err: any) => {

@@ -1,0 +1,21 @@
+.table {
+  vertical-align: middle;
+}
+
+.badge {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.85rem;
+}
+
+.btn-group {
+  .btn {
+    margin-right: 0.25rem;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.tab-content {
+  padding: 1.5rem 0;
+}

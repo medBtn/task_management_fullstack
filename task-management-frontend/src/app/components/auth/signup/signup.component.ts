@@ -30,6 +30,7 @@ export class SignupComponent implements OnInit {
 
   onSubmit() {
     const user = this.signupForm.value;
+    user.role = 'USER';
 
     this.authService.register(user).subscribe(
       (res:any) => {
