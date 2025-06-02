@@ -1,5 +1,6 @@
 package com.teletic.task_management.entity;
 
+import com.teletic.task_management.dto.UserDto;
 import com.teletic.task_management.enums.UserRole;
 
 import jakarta.persistence.*;
@@ -27,7 +28,15 @@ public class User {
     @Column(name = "role")
     private UserRole role;
 
-    @Lob
-    @Column(name = "img", columnDefinition = "longblob")
-    private byte[] img;
+    public static UserDto toDto(User user) {
+        UserDto dto = new UserDto();
+        
+        dto.setId(user.getId());
+        dto.setUsername(user.getUsername());
+        dto.setEmail(user.getEmail());
+        dto.setRole(user.getRole());
+
+        return dto;
+    }
+
 }
