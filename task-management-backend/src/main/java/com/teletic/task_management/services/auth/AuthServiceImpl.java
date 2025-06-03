@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import com.teletic.task_management.dto.SignUpRequest;
 import com.teletic.task_management.dto.UserDto;
 import com.teletic.task_management.entity.User;
-import com.teletic.task_management.enums.UserRole;
 import com.teletic.task_management.repository.UserRepository;
 
 @Service
@@ -70,17 +69,17 @@ public class AuthServiceImpl implements AuthService {
         return UserPage.map(User::toDto);
     }
 
-    @PostConstruct
-    public void createAdminAccount() {
-        User adminAccoount = userRepository.findByRole(UserRole.ADMIN);
-        if (adminAccoount == null) {
-            User user = new User();
-            user.setEmail("admin@admin.com");
-            user.setUsername("admin");
-            user.setPassword(bCryptPasswordEncoder.encode("admin"));
-            user.setRole(UserRole.ADMIN);
-            userRepository.save(user);
-        }
-    }
+    // @PostConstruct
+    // public void createAdminAccount() {
+    //     User adminAccoount = userRepository.findByRole(UserRole.ADMIN);
+    //     if (adminAccoount == null) {
+    //         User user = new User();
+    //         user.setEmail("admin@admin.com");
+    //         user.setUsername("admin");
+    //         user.setPassword(bCryptPasswordEncoder.encode("admin"));
+    //         user.setRole(UserRole.ADMIN);
+    //         userRepository.save(user);
+    //     }
+    // }
 
 }
