@@ -1,5 +1,7 @@
 package com.teletic.task_management.controller;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -8,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -54,11 +57,25 @@ public class TaskController {
         }
     }
 
+    @DeleteMapping("/task/{id}")
+    public ResponseEntity<String> deleteTask(@PathVariable Long id) {
+        taskService.deleteTaskById(id);
+        return ResponseEntity.ok("Task deleted successfully.");
+    }
+
     @GetMapping(path = "/tasks")
     public ResponseEntity<Page<TaskDto>> searchTasks(
             @RequestParam(name = "searchTerm", required = false, defaultValue = "") String search,
             @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
         Page<TaskDto> tasks = taskService.searchTasks(search, pageable);
+        return ResponseEntity.ok(tasks);
+    }
+
+    @GetMapping(path = "/assigned/{userId}")
+    public ResponseEntity<Page<TaskDto>> getTasksAssignedToUser(
+            @PathVariable Long userId,
+            @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+        Page<TaskDto> tasks = taskService.getTasksAssignedToUser(userId, pageable);
         return ResponseEntity.ok(tasks);
     }
 

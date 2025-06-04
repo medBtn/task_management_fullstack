@@ -17,5 +17,7 @@ public interface AuthService {
 
     Boolean userNameExist(String username);
 
+    void deleteUserById(Long id);
+
     User getUserById(Long id);
 }

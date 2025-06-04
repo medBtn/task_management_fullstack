@@ -1,6 +1,7 @@
 package com.teletic.task_management.services.auth;
 
 import jakarta.annotation.PostConstruct;
+import jakarta.persistence.EntityNotFoundException;
 
 import java.util.Optional;
 
@@ -67,6 +68,13 @@ public class AuthServiceImpl implements AuthService {
     public Page<UserDto> searchUsers(String searchKey, Pageable pageable) {
         Page<User> UserPage = userRepository.searchUsers(searchKey, pageable);
         return UserPage.map(User::toDto);
+    }
+
+    public void deleteUserById(Long id) {
+        if (!userRepository.existsById(id)) {
+            throw new EntityNotFoundException("User not found with ID: " + id);
+        }
+        userRepository.deleteById(id);
     }
 
     // @PostConstruct

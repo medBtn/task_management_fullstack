@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -71,6 +72,7 @@ public class AuthController {
         if (optionalUser.isPresent()) {
             response.getWriter().write(new JSONObject()
                     .put("userId", optionalUser.get().getId())
+                    .put("username", optionalUser.get().getUsername())
                     .put("role", optionalUser.get().getRole())
                     .toString());
 
@@ -125,6 +127,12 @@ public class AuthController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @DeleteMapping(path = "/user/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
+        authService.deleteUserById(id);
+        return ResponseEntity.ok("User deleted successfully.");
     }
 
     @GetMapping(path = "/users")

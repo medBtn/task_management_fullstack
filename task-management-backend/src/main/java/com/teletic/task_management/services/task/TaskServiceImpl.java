@@ -9,11 +9,12 @@ import org.springframework.stereotype.Service;
 
 import com.teletic.task_management.dto.TaskDto;
 import com.teletic.task_management.dto.TaskRequest;
-import com.teletic.task_management.dto.UserDto;
 import com.teletic.task_management.entity.Task;
 import com.teletic.task_management.entity.User;
 import com.teletic.task_management.repository.TaskRepository;
 import com.teletic.task_management.repository.UserRepository;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class TaskServiceImpl implements TaskService {
@@ -65,4 +66,17 @@ public class TaskServiceImpl implements TaskService {
        Page<Task> usersPage = taskRepository.searchTasks(searchKey, pageable);
         return usersPage.map(Task::toDto);
     }
-}
+
+    public void deleteTaskById(Long id) {
+        if (!taskRepository.existsById(id)) {
+            throw new EntityNotFoundException("User not found with ID: " + id);
+        }
+        taskRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<TaskDto> getTasksAssignedToUser(Long userId, Pageable pageable) {
+        return taskRepository.findByAssignedToId(userId, pageable).map(Task::toDto);
+    }
+
+ }
