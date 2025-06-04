@@ -1,0 +1,80 @@
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <div class="search-input">
+    <span class="search-icon"><i class="bx bx-search"></i></span>
+    <input #inputSearch [(ngModel)]="state.searchTerm" [ngModelOptions]="{standalone: true}" (input)="loadTasks()"
+      type="search" class="form-control" placeholder="Search..." />
+  </div>
+  <button class="btn btn-primary" (click)="openModal()">
+    <i class="fas fa-task-plus me-2"></i>
+    Add Task
+  </button>
+</div>
+<div class="glass-effect p-3">
+  <!-- Tasks Table -->
+  <div class="table-responsive">
+    <table class="table table-responsive table-hover">
+      <thead class="">
+        <tr>
+          <th (click)="onSort('title')">Title</th>
+          <th (click)="onSort('assignedTo')">Assigned To</th>
+          <th (click)="onSort('status')">Status</th>
+          <th (click)="onSort('createdBy')">Created By</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="tasks.length === 0">
+          <td colspan="4" class="text-center">No tasks found</td>
+        </tr>
+        <tr *ngFor="let task of tasks">
+          <td>{{ task.title }}</td>
+          <td>{{ task.assignedTo }}</td>
+          <td><app-task-status-badge [status]="task.status"></app-task-status-badge></td>
+          <td>{{ task.createdBy }}</td>
+
+          <td>
+            <div class="d-flex gap-3">
+              <!-- <button class="btn btn-sm btn-outline-success" > -->
+              <i class='bx  bx-edit text-success fs-4' (click)="openModal(task)"></i>
+              <!-- </button> -->
+              <!-- <button class="btn btn-sm btn-outline-danger"> -->
+              <i class='bx  bx-trash text-danger fs-4' (click)="deleteTask(task.id!)"></i>
+              <!-- </button> -->
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pagination-section">
+    <div class="row align-items-center">
+      <div class="col">
+        <div class="mb-2" id="tickets-table_info" role="status" aria-live="polite">
+
+          <div class="btn-group mx-2" ngbDropdown>
+            <button type="button" class="btn btn-outline-primary btn-sm p-1 dropdown-toggle" data-bs-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>{{state.pageSize}}</button>
+            <div class="dropdown-menu" ngbDropdownMenu>
+              <a class="dropdown-item" (click)="state.pageSize =4 ; loadTasks()">4</a>
+              <a class="dropdown-item" (click)="state.pageSize=8 ; loadTasks()">8</a>
+              <a class="dropdown-item" (click)="state.pageSize=15 ; loadTasks()">15</a>
+              <a class="dropdown-item" (click)="state.pageSize =20 ;loadTasks()">20</a>
+            </div>
+          </div>
+          Show {{state.endIndex}} of {{state.totalRecords}} tasks
+        </div>
+      </div>
+      <!-- Pagination -->
+      <div class="col-auto">
+        <div class="text-sm-right float-sm-end custom-pagination">
+          <ngb-pagination [collectionSize]="(state.totalRecords)" [(page)]="state.pageNumber" [maxSize]="3"
+            [pageSize]="state.pageSize" (pageChange)="loadTasks()" aria-label="Default pagination"
+            class="pagination-style">
+          </ngb-pagination>
+        </div>
+      </div>
+      <!-- End Pagination -->
+    </div>
+  </div>
+</div>

@@ -1,10 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
-@use 'bootstrap/scss/bootstrap' as bootstrap;
-@import 'bootstrap-icons/font/bootstrap-icons.css';
+@use "bootstrap/scss/bootstrap" as bootstrap;
+@import "bootstrap-icons/font/bootstrap-icons.css";
+@import 'assets/styles/custom.scss';
+
+// Font Awesome for icons
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
+
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f8f9fa;
+  font-family: 'Inter', sans-serif;
+  line-height: 1.6;
 }
 
 .card {
@@ -28,4 +35,79 @@ body {
 .form-control:focus {
   border-color: #80bdff;
   box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+}
+// Custom pagination styling
+.pagination-section {
+  margin-top: 20px;
+  padding: 15px;
+  border-top: 1px solid #f0f0f0;
+}
+
+:host ::ng-deep {
+  .custom-pagination {
+    .pagination {
+      display: flex;
+      padding-left: 0;
+      list-style: none;
+      border-radius: 0.25rem;
+
+      .page-item {
+        &:first-child .page-link {
+          margin-left: 0;
+          border-top-left-radius: 0.25rem;
+          border-bottom-left-radius: 0.25rem;
+        }
+
+        &:last-child .page-link {
+          border-top-right-radius: 0.25rem;
+          border-bottom-right-radius: 0.25rem;
+        }
+
+        &.active .page-link {
+          z-index: 3;
+          color: #fff;
+          background-color: #ff9f43; // Changed to orange color
+          border-color: #ff9f43;
+        }
+
+        &.disabled .page-link {
+          color: #6c757d;
+          pointer-events: none;
+          cursor: auto;
+          background-color: #fff;
+          border-color: #dee2e6;
+        }
+      }
+
+      .page-link {
+        position: relative;
+        display: block;
+        padding: 0.5rem 0.75rem;
+        margin-left: -1px;
+        line-height: 1.25;
+        color: #ff9f43; // Changed to orange color
+        background-color: #fff;
+        border: 1px solid #dee2e6;
+
+        &:hover {
+          z-index: 2;
+          color: #e67e22; // Darker orange for hover
+          text-decoration: none;
+          background-color: #f8f9fa;
+          border-color: #dee2e6;
+        }
+
+        &:focus {
+          z-index: 3;
+          outline: 0;
+          box-shadow: 0 0 0 0.2rem rgba(255, 159, 67, 0.25); // Orange shadow
+        }
+      }
+    }
+  }
+}
+
+#tickets-table_info {
+  color: #6c757d;
+  font-size: 14px;
 }

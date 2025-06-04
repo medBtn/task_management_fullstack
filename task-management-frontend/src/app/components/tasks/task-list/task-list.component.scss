@@ -1,0 +1,35 @@
+.form-control[type="search"] {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  width: 250px;
+  transition: all 0.3s ease;
+
+  &:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+  }
+
+  &::placeholder {
+    color: #999;
+  }
+}
+
+.search-input {
+  position: relative;
+
+  .form-control {
+    padding-left: 40px; // Make space for the icon
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999; // Icon color
+    pointer-events: none; // Allow clicks to pass through to input
+  }
+}

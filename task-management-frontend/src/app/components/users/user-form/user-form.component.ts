@@ -1,15 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { UserService } from '../../../../core/services/user.service';
-import { User } from '../../../../core/models/user.model';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { CommonModule } from "@angular/common";
+import { Component, OnInit, Input } from "@angular/core";
+import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { User } from "../../../core/models/user.model";
+import { UserService } from "../../../core/services/user.service";
+
 
 @Component({
   selector: 'app-user-form',
@@ -23,8 +19,6 @@ export class UserFormComponent implements OnInit {
   userForm!: FormGroup;
   isEditMode = false;
   loading = false;
-  error = '';
-  success = '';
 
   constructor(
     private fb: FormBuilder,
@@ -64,14 +58,10 @@ export class UserFormComponent implements OnInit {
       userData.id = this.user.id;
       this.userService.updateUser(userData).subscribe(
         () => {
-          this.success = 'User updated successfully';
           this.loading = false;
-          setTimeout(() => {
-            this.router.navigate(['/admin']);
-          }, 1500);
+          this.activeModal.close()
         },
-        (error) => {
-          this.error = 'Failed to update user';
+        (error:any) => {
           this.loading = false;
           console.error('Error updating user:', error);
         }
@@ -79,14 +69,10 @@ export class UserFormComponent implements OnInit {
     } else {
       this.userService.createUser(userData).subscribe(
         () => {
-          this.success = 'User created successfully';
           this.loading = false;
-          setTimeout(() => {
-            this.router.navigate(['/admin']);
-          }, 1500);
+          this.activeModal.close()
         },
-        (error) => {
-          this.error = 'Failed to create user';
+        (error:any) => {
           this.loading = false;
           console.error('Error creating user:', error);
         }

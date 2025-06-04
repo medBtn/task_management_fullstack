@@ -1,0 +1,101 @@
+<div class="main-app min-vh-100 gradient-soft">
+
+  <!-- Header -->
+  <app-header></app-header>
+
+  <!-- Tab Navigation -->
+  <app-tab-navigation [tabs]="tabs" [activeTab]="activeTab" [userRole]="currentUser.role"
+    (tabChange)="onTabChange($event)">
+  </app-tab-navigation>
+
+  <!-- Main Content Area -->
+  <main class="container-fluid-lg px-4 pb-5">
+    <div class="content-wrapper">
+
+      <!-- Dashboard Tab -->
+      <div *ngIf="activeTab === 'dashboard'" class="tab-content">
+        <div class="row g-4 mb-4">
+          <div class="col-md-3">
+            <div class="card glass-effect border-0 hover-lift h-100">
+              <div class="card-body text-center">
+                <div
+                  class="gradient-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                  style="width: 60px; height: 60px;">
+                  <i class="fas fa-tasks text-white fs-4"></i>
+                </div>
+                <h3 class="text-teal-dark mb-2">{{ dashboardStats.totalTasks }}</h3>
+                <p class="text-muted mb-0">Total Tasks</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card glass-effect border-0 hover-lift h-100">
+              <div class="card-body text-center">
+                <div class="bg-coral rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                  style="width: 60px; height: 60px;">
+                  <i class="fas fa-clock text-white fs-4"></i>
+                </div>
+                <h3 class="text-teal-dark mb-2">{{ dashboardStats.pendingTasks }}</h3>
+                <p class="text-muted mb-0">Pending</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card glass-effect border-0 hover-lift h-100">
+              <div class="card-body text-center">
+                <div class="bg-teal-light rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                  style="width: 60px; height: 60px;">
+                  <i class="fas fa-spinner text-white fs-4"></i>
+                </div>
+                <h3 class="text-teal-dark mb-2">{{ dashboardStats.inProgressTasks }}</h3>
+                <p class="text-muted mb-0">In Progress</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card glass-effect border-0 hover-lift h-100">
+              <div class="card-body text-center">
+                <div class="bg-success rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                  style="width: 60px; height: 60px;">
+                  <i class="fas fa-check-circle text-white fs-4"></i>
+                </div>
+                <h3 class="text-teal-dark mb-2">{{ dashboardStats.completedTasks }}</h3>
+                <p class="text-muted mb-0">Completed</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center">
+          <h5 class="text-teal-dark mb-3">Welcome to TaskFlow Pro</h5>
+          <p class="text-muted">Navigate through the tabs above to manage your tasks and users.</p>
+        </div>
+      </div>
+
+      <!-- My Tasks Tab -->
+      <div *ngIf="activeTab === 'my-tasks'" class="tab-content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+        </div>
+        <!-- Your existing task components will go here -->
+        <app-empty-state title="No tasks assigned"
+          message="You don't have any tasks assigned yet. Check back later or contact your administrator."
+          iconClass="fas fa-tasks" actionText="Refresh" actionIcon="fas fa-sync-alt">
+        </app-empty-state>
+      </div>
+
+      <!-- All Tasks Tab (Admin Only) -->
+      <div *ngIf="activeTab === 'all-tasks'" class="tab-content">
+        <app-task-list></app-task-list>
+        <!-- Your existing admin task components will go here -->
+      </div>
+
+      <!-- Users Tab (Admin Only) -->
+      <div *ngIf="activeTab === 'users'" class="tab-content">
+        <app-user-list></app-user-list>
+        <!-- Your existing user management components will go here -->
+      </div>
+
+    </div>
+  </main>
+</div>

@@ -1,8 +1,13 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../../../services/auth/auth.service';
-import { UserStorageService } from '../../../services/auth/user-storage.service';
+import { AuthService } from '../../../core/services/auth/auth.service';
+import { UserStorageService } from '../../../core/services/auth/user-storage.service';
 
 @Component({
   selector: 'app-login',
@@ -13,8 +18,6 @@ import { UserStorageService } from '../../../services/auth/user-storage.service'
 export class LoginComponent {
   loginForm!: FormGroup;
 
-  log: String = '';
-
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
@@ -22,6 +25,13 @@ export class LoginComponent {
   ) {}
 
   ngOnInit(): void {
+
+    if (UserStorageService.isAdminLoggedIn()) {
+      this.router.navigateByUrl('admin');
+    } else if (UserStorageService.isUserLoggedIn()) {
+      this.router.navigateByUrl('user');
+    }
+
     this.loginForm = this.fb.group({
       username: [, Validators.required],
       password: [, Validators.required],
@@ -34,17 +44,14 @@ export class LoginComponent {
 
     this.authService.login(username, password).subscribe(
       (res: any) => {
-        this.log = JSON.stringify(res);
         if (UserStorageService.isAdminLoggedIn()) {
           this.router.navigateByUrl('admin');
-          console.log('Admin login successful');
         } else if (UserStorageService.isUserLoggedIn()) {
           this.router.navigateByUrl('user');
-          console.log('User login successful');
         }
       },
       (err: any) => {
-        this.log = JSON.stringify(err);
+        console.log(err);
       }
     );
   }

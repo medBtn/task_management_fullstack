@@ -1,24 +1,18 @@
 <div class="container">
-  <div class="row">
-    <div class="col">
+  <div class="row align-items-center justify-content-center">
+    <div class="col-12 glass-effect p-3">
       <form [formGroup]="loginForm">
         <div class="mb-3">
-          <label  class="form-label">Username</label>
+          <label class="form-label">Username</label>
           <input type="text" formControlName="username" class="form-control">
         </div>
         <div class="mb-3">
-          <label  class="form-label">Password</label>
+          <label class="form-label">Password</label>
           <input type="password" formControlName="password" class="form-control">
         </div>
         <button type="submit" (click)="onSubmit()" class="btn btn-primary">Submit</button>
       </form>
 
-      <div class="row">
-        <a routerLink="/signup">don't have account? signup</a>
-      </div>
-    </div>
-    <div class="col">
-      <label for="">{{log}}</label>
     </div>
   </div>
 </div>
