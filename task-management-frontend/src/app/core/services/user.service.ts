@@ -12,9 +12,15 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  // Get all users (admin only)
-  getAllUsers(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/users`);
+  // Search users (admin only)
+  searchUsers(state:any): Observable<any[]> {
+    return this.http.get<any[]>(
+      `${this.apiUrl}/users` +
+        `?page=${state.pageNumber - 1}` +
+        `&size=${state.pageSize}` +
+        `&sort=${state.sortColumn},${state.sortDirection}` +
+        (state.searchTerm ? `&searchTerm=${state.searchTerm}` : ``)
+    );
   }
 
   // Get user by ID
@@ -23,7 +29,7 @@ export class UserService {
   }
 
   // Create a new user (admin only)
-  createUser(user:User): Observable<User> {
+  createUser(user: User): Observable<User> {
     return this.http.post<User>(`${this.apiUrl}/user`, user);
   }
 

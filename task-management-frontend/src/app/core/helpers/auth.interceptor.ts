@@ -1,5 +1,5 @@
 import { HttpInterceptorFn } from '@angular/common/http';
-import { UserStorageService } from '../../services/auth/user-storage.service';
+import { UserStorageService } from '../services/auth/user-storage.service';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   // Start with default headers

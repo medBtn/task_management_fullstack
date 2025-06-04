@@ -1,0 +1,61 @@
+<header class="header glass-effect border-bottom border-teal-light border-opacity-25 sticky-top">
+  <div class="container-fluid px-4">
+    <div class="row align-items-center py-3">
+
+      <!-- Logo & Brand -->
+      <div class="col-md-6">
+        <div class="d-flex align-items-center">
+          <div class="gradient-sunset rounded-3 p-3 me-3 shadow-sm" style="width: 50px; height: 50px;">
+            <i class="fas fa-tasks text-white fs-4"></i>
+          </div>
+          <div>
+            <h3 class="mb-0 text-primary-gradient fw-bold">TaskFlow Pro</h3>
+            <small class="text-teal-light">Smart Task Management</small>
+          </div>
+        </div>
+      </div>
+      <!-- Welcome & User Actions -->
+      <div class="col-md-6">
+        <div class="d-flex align-items-center justify-content-end gap-3">
+
+
+          <!-- User Profile Dropdown -->
+          <div class="dropdown">
+            <button class="btn btn-link text-teal-dark p-0" type="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              <div class="d-flex align-items-center">
+                <div class="bg-coral rounded-circle d-flex align-items-center justify-content-center me-2"
+                  style="width: 40px; height: 40px;">
+                  <i class="fas fa-user text-white"></i>
+                </div>
+                <div class="text-start d-none d-lg-block">
+                  <div class="text-teal-dark fw-semibold small">{{ currentUser.username }}</div>
+                  <div class="text-muted" style="font-size: 0.75rem;">{{ currentUser.username }}</div>
+                </div>
+                <i class="fas fa-chevron-down text-teal-light ms-2 small"></i>
+              </div>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end glass-effect border-0 shadow-lg mt-2">
+              <li class="px-3 py-2 border-bottom border-teal-light border-opacity-25">
+                <div class="text-teal-dark fw-semibold">{{ currentUser.username }}</div>
+                <small class="text-muted">boutine111&#64;gmail.com</small>
+              </li>
+              <li><a class="dropdown-item py-2" href="#"><i class="fas fa-user me-2 text-teal-light"></i>Profile
+                  Settings</a></li>
+              <li><a class="dropdown-item py-2" href="#"><i class="fas fa-cog me-2 text-teal-light"></i>Preferences</a>
+              </li>
+              <li><a class="dropdown-item py-2" href="#"><i class="fas fa-question-circle me-2 text-teal-light"></i>Help
+                  & Support</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item py-2 text-danger" (click)="logout()">
+                  <i class="fas fa-sign-out-alt me-2"></i>Sign Out
+                </a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

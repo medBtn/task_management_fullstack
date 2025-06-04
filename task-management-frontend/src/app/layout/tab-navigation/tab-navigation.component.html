@@ -1,0 +1,18 @@
+<div class="tab-navigation-container">
+  <nav class="tab-navigation glass-effect">
+    <div class="container-fluid px-4">
+      <ul class="nav nav-pills d-flex justify-content-start position-relative">
+        @for (tab of visibleTabs; track $index) {
+        <li class="nav-item">
+          <button class="nav-link position-relative d-flex align-items-center gap-2"
+            [class.active]="tab.id === activeTab" (click)="selectTab(tab.id)" type="button">
+            <i [class]="tab.icon"></i>
+            <span class="tab-label">{{ tab.label }}</span>
+          </button>
+        </li>
+
+        }
+      </ul>
+    </div>
+  </nav>
+</div>

@@ -1,0 +1,24 @@
+.header {
+  background: rgba(253, 251, 238, 0.98);
+  backdrop-filter: blur(15px);
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(1, 85, 81, 0.1);
+  border: none;
+  margin-bottom: 16px;
+}
+
+.dropdown-menu {
+  border: 1px solid rgba(87, 180, 186, 0.2);
+  min-width: 220px;
+}
+
+.dropdown-item:hover {
+  background: rgba(87, 180, 186, 0.1);
+  color: #015551;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: none;
+}
+
