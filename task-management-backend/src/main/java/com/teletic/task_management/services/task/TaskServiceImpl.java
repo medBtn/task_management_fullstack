@@ -7,7 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.teletic.task_management.dto.TaskDto;
 import com.teletic.task_management.dto.TaskRequest;
+import com.teletic.task_management.dto.UserDto;
 import com.teletic.task_management.entity.Task;
 import com.teletic.task_management.entity.User;
 import com.teletic.task_management.repository.TaskRepository;
@@ -59,7 +61,8 @@ public class TaskServiceImpl implements TaskService {
         return taskRepository.findById(id).orElse(null);
     }
 
-    public Page<Task> searchTasks(String searchKey, Pageable pageable) {
-        return taskRepository.searchTasks(searchKey, pageable);
+    public Page<TaskDto> searchTasks(String searchKey, Pageable pageable) {
+       Page<Task> usersPage = taskRepository.searchTasks(searchKey, pageable);
+        return usersPage.map(Task::toDto);
     }
 }

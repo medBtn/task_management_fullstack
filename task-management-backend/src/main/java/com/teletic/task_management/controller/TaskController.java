@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.teletic.task_management.dto.TaskDto;
 import com.teletic.task_management.dto.TaskRequest;
 import com.teletic.task_management.entity.Task;
 import com.teletic.task_management.services.task.TaskService;
@@ -54,10 +55,10 @@ public class TaskController {
     }
 
     @GetMapping(path = "/tasks")
-    public ResponseEntity<Page<Task>> searchTasks(
+    public ResponseEntity<Page<TaskDto>> searchTasks(
             @RequestParam(name = "searchTerm", required = false, defaultValue = "") String search,
             @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
-        Page<Task> tasks = taskService.searchTasks(search, pageable);
+        Page<TaskDto> tasks = taskService.searchTasks(search, pageable);
         return ResponseEntity.ok(tasks);
     }
 

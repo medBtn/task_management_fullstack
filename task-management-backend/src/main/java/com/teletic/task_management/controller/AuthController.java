@@ -108,16 +108,20 @@ public class AuthController {
     }
 
     @PostMapping(path = "user")
-    public ResponseEntity<UserDto> addUser(@RequestBody SignUpRequest signUpRequest) {
-        UserDto savedUser = authService.createUser(signUpRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
+    public ResponseEntity<?> addUser(@RequestBody SignUpRequest signUpRequest) {
+        if (authService.userNameExist(signUpRequest.getUsername())) {
+            return new ResponseEntity<>("user already exists !", HttpStatus.NOT_ACCEPTABLE);
+        }
+        System.out.println("Sign up request: " + signUpRequest);
+        UserDto userDto = authService.createUser(signUpRequest);
+        return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
 
     @PutMapping(path = "user")
-    public ResponseEntity<User> updateUser(@RequestBody User updatedUser) {
+    public ResponseEntity<UserDto> updateUser(@RequestBody User updatedUser) {
         User savedUser = authService.updateUser(updatedUser);
         if (savedUser != null) {
-            return ResponseEntity.ok(savedUser);
+            return ResponseEntity.ok(User.toDto(savedUser));
         } else {
             return ResponseEntity.notFound().build();
         }

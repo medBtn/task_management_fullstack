@@ -2,6 +2,8 @@ package com.teletic.task_management.entity;
 
 import java.time.LocalDateTime;
 
+import com.teletic.task_management.dto.TaskDto;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -56,5 +58,18 @@ public class Task {
     @PreUpdate
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
+    }
+
+    public static TaskDto toDto(Task task) {
+        TaskDto dto = new TaskDto();
+
+        dto.setId(task.getId());
+        dto.setTitle(task.getTitle());
+        dto.setDescription(task.getDescription());
+        dto.setStatus(task.getStatus());
+        dto.setAssignedTo(task.getAssignedTo().getUsername());
+        dto.setCreatedBy(task.getCreatedBy().getUsername());
+
+        return dto;
     }
 }

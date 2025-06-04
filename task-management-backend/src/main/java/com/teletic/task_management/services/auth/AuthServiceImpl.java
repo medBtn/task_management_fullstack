@@ -44,7 +44,7 @@ public class AuthServiceImpl implements AuthService {
 
         if (userOptional.isPresent()) {
             User userToUpdate = userOptional.get();
-            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+            userToUpdate.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             userToUpdate.setEmail(user.getEmail());
             userToUpdate.setUsername(user.getUsername());
             userToUpdate.setRole(user.getRole());
@@ -71,15 +71,15 @@ public class AuthServiceImpl implements AuthService {
 
     // @PostConstruct
     // public void createAdminAccount() {
-    //     User adminAccoount = userRepository.findByRole(UserRole.ADMIN);
-    //     if (adminAccoount == null) {
-    //         User user = new User();
-    //         user.setEmail("admin@admin.com");
-    //         user.setUsername("admin");
-    //         user.setPassword(bCryptPasswordEncoder.encode("admin"));
-    //         user.setRole(UserRole.ADMIN);
-    //         userRepository.save(user);
-    //     }
+    // User adminAccoount = userRepository.findByRole(UserRole.ADMIN);
+    // if (adminAccoount == null) {
+    // User user = new User();
+    // user.setEmail("admin@admin.com");
+    // user.setUsername("admin");
+    // user.setPassword(bCryptPasswordEncoder.encode("admin"));
+    // user.setRole(UserRole.ADMIN);
+    // userRepository.save(user);
+    // }
     // }
 
 }
