@@ -1,0 +1,20 @@
+CREATE TABLE IF NOT EXISTS user (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(100) NOT NULL,
+    role VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS task (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(100) NOT NULL,
+    description TEXT,
+    status VARCHAR(20) NOT NULL,
+    assigned_to BIGINT,
+    created_by BIGINT NOT NULL,
+    created_at DATETIME NOT NULL,
+    updated_at DATETIME NOT NULL,
+    FOREIGN KEY (assigned_to) REFERENCES user(id) ON DELETE SET NULL,
+    FOREIGN KEY (created_by) REFERENCES user(id)
+);

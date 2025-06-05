@@ -1,7 +1,5 @@
 package com.teletic.task_management.services.task;
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -22,5 +20,7 @@ public interface TaskService {
     void deleteTaskById(Long id);
 
     Page<TaskDto> getTasksAssignedToUser(Long userId, Pageable pageable);
+
+    Task updateTaskStatus(Long id, String status);
 
 }

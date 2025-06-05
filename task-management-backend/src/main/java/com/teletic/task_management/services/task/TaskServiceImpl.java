@@ -63,7 +63,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     public Page<TaskDto> searchTasks(String searchKey, Pageable pageable) {
-       Page<Task> usersPage = taskRepository.searchTasks(searchKey, pageable);
+        Page<Task> usersPage = taskRepository.searchTasks(searchKey, pageable);
         return usersPage.map(Task::toDto);
     }
 
@@ -79,4 +79,15 @@ public class TaskServiceImpl implements TaskService {
         return taskRepository.findByAssignedToId(userId, pageable).map(Task::toDto);
     }
 
- }
+    @Override
+    public Task updateTaskStatus(Long id, String status) {
+        Task task = taskRepository.findById(id).orElse(null);
+        if (task != null) {
+            task.setStatus(status);
+            return taskRepository.save(task);
+        } else {
+            throw new RuntimeException("Task not found");
+        }
+    }
+
+}

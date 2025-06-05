@@ -42,9 +42,10 @@ public class Task {
     @JoinColumn(name = "assigned_to")
     @OnDelete(action = OnDeleteAction.SET_NULL)
     private User assignedTo;
-
+    
     @ManyToOne
     @JoinColumn(name = "created_by")
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private User createdBy;
     
     @Column(name = "created_at")

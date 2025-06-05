@@ -1,7 +1,5 @@
 package com.teletic.task_management.controller;
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -50,6 +48,15 @@ public class TaskController {
     @PutMapping(path = "task")
     public ResponseEntity<Task> updateTask(@RequestBody TaskRequest updatedTask) {
         Task savedTask = taskService.updateTask(updatedTask);
+        if (savedTask != null) {
+            return ResponseEntity.ok(savedTask);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @PutMapping(path = "/task/{id}")
+    public ResponseEntity<Task> updateTaskStatus(@RequestBody String status,@PathVariable Long id) {
+        Task savedTask = taskService.updateTaskStatus(id, status);
         if (savedTask != null) {
             return ResponseEntity.ok(savedTask);
         } else {
