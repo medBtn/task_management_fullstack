@@ -13,6 +13,7 @@ import { Task } from '../../../core/models/task.model';
 import { TaskService } from '../../../core/services/task.service';
 import { taskFormComponent } from '../task-from/task-form.component';
 import { EmptyStateComponent } from '../empty-state/empty-state.component';
+import { UserStorageService } from '../../../core/services/auth/user-storage.service';
 
 @Component({
   selector: 'app-my-task',
@@ -32,7 +33,7 @@ export class MyTaskComponent implements OnInit {
   state = {...PAGIGNATION};
 
   tasks: Task[] = [];
-  loading = false;
+  isLoading = false;
 
   constructor(
     private taskService: TaskService,
@@ -44,18 +45,18 @@ export class MyTaskComponent implements OnInit {
   }
 
   loadTasks(): void {
-    this.loading = true;
+    this.isLoading = true;
     this.taskService.getAssignedTask(this.state).subscribe(
       (tasks: any) => {
         this.tasks = tasks.content;
         this.state.totalRecords = tasks.totalElements;
         this.loadPage();
         console.log('tasks = ', tasks);
-        this.loading = false;
+        this.isLoading = false;
       },
       (error: any) => {
-        this.loading = false;
-        console.error('Error loading tasks:', error);
+        this.isLoading = false;
+        console.error('Error isLoading tasks:', error);
       }
     );
   }
@@ -103,8 +104,8 @@ export class MyTaskComponent implements OnInit {
       console.error('Task ID is undefined. Cannot update status.');
       return;
     }
-    task.status = status;
-    this.taskService.updateTask(task).subscribe(
+
+    this.taskService.updateTaskStatus(task.id,status).subscribe(
       () => {
         this.loadTasks(); // Reload tasks to reflect the change
       },

@@ -13,15 +13,15 @@
           </div>
         </div>
       </div>
-      <div class="col-12 glass-effect p-3">
+      <div class="col-12 glass-effect p-5">
         <form [formGroup]="loginForm">
           <div class="mb-3">
             <label class="form-label">Username</label>
-            <input type="text" formControlName="username" class="form-control">
+            <input type="text" placeholder="admin" formControlName="username" class="form-control">
           </div>
           <div class="mb-3">
             <label class="form-label">Password</label>
-            <input type="password" formControlName="password" class="form-control">
+            <input type="password" placeholder="admin" formControlName="password" class="form-control">
           </div>
           <button type="submit" (click)="onSubmit()" [disabled]="loginForm.invalid || isLoading"
             class="btn btn-primary">

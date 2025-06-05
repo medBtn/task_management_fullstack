@@ -1,0 +1,8 @@
+.dropdown-toggle {
+  padding: 8px;
+  background-color: salmon;
+}
+
+.dropdown-menu.show {
+  transform: translate3d(8px, -120px, 0px) !important;
+}

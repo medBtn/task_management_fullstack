@@ -83,6 +83,7 @@ export class UserListComponent {
         this.userService.deleteUser(user.id!).subscribe({
           next: (res) => {
             successAlert('Success', 'Delete successfull');
+            this.loadUsers();
           },
           error: (err) => {
             errorAlert('Error', err);

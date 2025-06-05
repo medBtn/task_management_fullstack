@@ -84,6 +84,7 @@ export class TaskListComponent {
         this.taskService.deleteTask(task.id).subscribe({
           next: (res) => {
             successAlert('Success', 'Delete successfull');
+            this.loadTasks()
           },
           error: (err) => {
             errorAlert('Error', err);

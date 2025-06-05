@@ -53,6 +53,7 @@ export class LoginComponent {
         this.isLoading = false;
       },
       (err: any) => {
+        this.isLoading = false;
         console.log(err);
       }
     );

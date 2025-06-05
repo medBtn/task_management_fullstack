@@ -9,6 +9,7 @@ import { UserStorageService } from './auth/user-storage.service';
   providedIn: 'root',
 })
 export class TaskService {
+
   private apiUrl = `${environment.apiKey}`;
 
   constructor(private http: HttpClient) {}
@@ -42,6 +43,10 @@ export class TaskService {
     return this.http.get<Task>(`${this.apiUrl}/task/${taskId}`);
   }
 
+  // Update a task status
+  updateTaskStatus(id: number, status:string): Observable<Task> {
+    return this.http.put<Task>(`${this.apiUrl}/task/${id}`, status);
+  }
   // Create a new task (admin only)
   createTask(task: Task): Observable<Task> {
     return this.http.post<Task>(`${this.apiUrl}/task`, task);
@@ -53,7 +58,7 @@ export class TaskService {
   }
 
   // Delete a task (admin only)
-  deleteTask(taskId: string): Observable<string> {
+  deleteTask(taskId: number): Observable<string> {
     return this.http.delete<string>(`${this.apiUrl}/task/${taskId}`);
   }
 }

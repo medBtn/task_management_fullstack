@@ -9,12 +9,22 @@
     Add Task
   </button>
 </div>
-<div class="glass-effect p-3">
+<div class="p-3">
   @if (tasks.length === 0) {
   <app-empty-state></app-empty-state>
-  } @else {
+  }
+
+  @if(isLoading) {
+  <div class="row">
+    <div class="spin-container">
+      <span class="fas fa-spinner fa-spin"></span>
+    </div>
+  </div>
+  }
+  @else {
+
   @for (task of tasks; track task.id) {
-  <div class="col">
+  <div class="col m-3">
     <div class="card h-100 shadow-sm border-0  hover-lift">
       <div class="card-body d-flex flex-column">
         <h5 class="card-title text-primary-gradient mb-2">{{ task.title }}</h5>
