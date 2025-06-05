@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-between align-items-center mb-3">
   <div class="search-input">
-    <span class="search-icon"><i class="bx bx-search"></i></span>
+    <span class="search-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
     <input #inputSearch [(ngModel)]="state.searchTerm" [ngModelOptions]="{standalone: true}" (input)="loadTasks()"
       type="search" class="form-control" placeholder="Search..." />
   </div>
@@ -23,10 +23,23 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngIf="tasks.length === 0">
+
+        @if(isLoading){
+        <tr>
+          <td colspan="100%">
+            <div class="spin-container">
+              <span class="fas fa-spinner fa-spin"></span>
+            </div>
+          </td>
+        </tr>
+        }@else{
+        @if(tasks.length === 0){
+        <tr>
           <td colspan="4" class="text-center">No tasks found</td>
         </tr>
-        <tr *ngFor="let task of tasks">
+        }
+        @for (task of tasks; track $index) {
+        <tr>
           <td>{{ task.title }}</td>
           <td>{{ task.assignedTo }}</td>
           <td><app-task-status-badge [status]="task.status"></app-task-status-badge></td>
@@ -38,11 +51,13 @@
               <i class='fa-solid fa-pen-to-square text-success fs-4' (click)="openModal(task)"></i>
               <!-- </button> -->
               <!-- <button class="btn btn-sm btn-outline-danger"> -->
-              <i class='fa-solid fa-trash-can text-danger fs-4' (click)="deleteTask(task.id!)"></i>
+              <i class='fa-solid fa-trash-can text-danger fs-4' (click)="deleteTask(task)"></i>
               <!-- </button> -->
             </div>
           </td>
         </tr>
+        }
+        }
       </tbody>
     </table>
   </div>

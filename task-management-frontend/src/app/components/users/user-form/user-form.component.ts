@@ -1,11 +1,19 @@
-import { CommonModule } from "@angular/common";
-import { Component, OnInit, Input } from "@angular/core";
-import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
-import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { User } from "../../../core/models/user.model";
-import { UserService } from "../../../core/services/user.service";
+import { CommonModule } from '@angular/common';
+import { Component, OnInit, Input } from '@angular/core';
+import {
+  ReactiveFormsModule,
+  FormGroup,
+  FormBuilder,
+  Validators,
+} from '@angular/forms';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { User } from '../../../core/models/user.model';
+import { UserService } from '../../../core/services/user.service';
 
+import {
+  errorAlert,
+  successAlert,
+} from '../../../core/models/sweet-alert.model';
 
 @Component({
   selector: 'app-user-form',
@@ -23,8 +31,7 @@ export class UserFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
-    public activeModal: NgbActiveModal,
-    private router: Router
+    public activeModal: NgbActiveModal
   ) {}
 
   ngOnInit(): void {
@@ -44,7 +51,6 @@ export class UserFormComponent implements OnInit {
     });
   }
 
-
   onSubmit(): void {
     if (this.userForm.invalid) {
       this.userForm.markAllAsTouched();
@@ -59,10 +65,15 @@ export class UserFormComponent implements OnInit {
       this.userService.updateUser(userData).subscribe(
         () => {
           this.isLoading = false;
-          this.activeModal.close()
+          successAlert(
+            'Success',
+            'The user has been successfully updated.',
+          );
+          this.activeModal.close();
         },
-        (error:any) => {
+        (error: any) => {
           this.isLoading = false;
+          errorAlert('Error', error);
           console.error('Error updating user:', error);
         }
       );
@@ -70,10 +81,12 @@ export class UserFormComponent implements OnInit {
       this.userService.createUser(userData).subscribe(
         () => {
           this.isLoading = false;
-          this.activeModal.close()
+          successAlert('Success', 'The user has been successfully inserted.');
+          this.activeModal.close();
         },
-        (error:any) => {
+        (error: any) => {
           this.isLoading = false;
+          errorAlert('Error', error);
           console.error('Error creating user:', error);
         }
       );

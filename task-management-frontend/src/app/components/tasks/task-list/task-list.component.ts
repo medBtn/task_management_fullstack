@@ -8,18 +8,25 @@ import { Task } from '../../../core/models/task.model';
 import { TaskService } from '../../../core/services/task.service';
 import { taskFormComponent } from '../task-from/task-form.component';
 import { TaskStatusBadgeComponent } from '../task-status-badge/task-status-badge.component';
+import { confirmDelete, errorAlert, successAlert } from '../../../core/models/sweet-alert.model';
 
 @Component({
   selector: 'app-task-list',
-  imports: [CommonModule, RouterModule, NgbPagination,FormsModule,TaskStatusBadgeComponent],
+  imports: [
+    CommonModule,
+    RouterModule,
+    NgbPagination,
+    FormsModule,
+    TaskStatusBadgeComponent,
+  ],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.scss',
 })
 export class TaskListComponent {
-  state = {...PAGIGNATION};
+  state = { ...PAGIGNATION };
 
   tasks: Task[] = [];
-  loading = false;
+  isLoading = false;
 
   constructor(
     private taskService: TaskService,
@@ -31,17 +38,18 @@ export class TaskListComponent {
   }
 
   loadTasks(): void {
-    this.loading = true;
+    this.isLoading = true;
     this.taskService.searchTasks(this.state).subscribe(
       (tasks: any) => {
-        this.tasks = tasks.content;this.state.totalRecords = tasks.totalElements;
+        this.tasks = tasks.content;
+        this.state.totalRecords = tasks.totalElements;
         this.loadPage();
         console.log('tasks = ', tasks);
-        this.loading = false;
+        this.isLoading = false;
       },
       (error: any) => {
-        this.loading = false;
-        console.error('Error loading tasks:', error);
+        this.isLoading = false;
+        console.error('Error isLoading tasks:', error);
       }
     );
   }
@@ -70,17 +78,19 @@ export class TaskListComponent {
     // reload data
     this.loadTasks();
   }
-  deleteTask(taskId: string): void {
-    if (confirm('Are you sure you want to delete this task?')) {
-      this.taskService.deleteTask(taskId).subscribe(
-        () => {
-          this.tasks = this.tasks.filter((task) => task.id !== taskId);
-        },
-        (error: any) => {
-          console.error('Error deleting task:', error);
-        }
-      );
-    }
+  deleteTask(task: Task) {
+    confirmDelete(task.title).then(confirmed=>{
+      if(confirmed){
+        this.taskService.deleteTask(task.id).subscribe({
+          next: (res) => {
+            successAlert('Success', 'Delete successfull');
+          },
+          error: (err) => {
+            errorAlert('Error', err);
+          },
+        });
+      }
+    })
   }
   openModal(task?: Task) {
     const modalRef = this.modalService.open(taskFormComponent, {

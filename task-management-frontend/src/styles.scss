@@ -1,16 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 @use "bootstrap/scss/bootstrap" as bootstrap;
-@import 'assets/styles/custom.scss';
+@import "assets/styles/custom.scss";
 
 // Font Awesome for icons
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css");
 
-
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   line-height: 1.6;
 }
 
@@ -19,7 +17,6 @@ body {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border: none;
 }
-
 
 // Custom pagination styling
 // .pagination-section {
@@ -133,16 +130,27 @@ body {
   }
 }
 
-.action-icons >i{
+.action-icons > i {
   cursor: pointer;
 }
-.action-icons >i{
+.action-icons > i {
   cursor: pointer;
 }
-.action-icons >i:hover{
+.action-icons > i:hover {
   .nav-link:hover {
     background: rgba(87, 180, 186, 0.1);
     border-color: rgba(87, 180, 186, 0.3);
     transform: translateY(-2px);
+  }
+}
+
+.spin-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80px; /* Optional: control height of the row */
+  width: 100%;
+  span {
+    font-size: 40px;
   }
 }

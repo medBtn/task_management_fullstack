@@ -53,7 +53,7 @@ export class TaskService {
   }
 
   // Delete a task (admin only)
-  deleteTask(taskId: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/task/${taskId}`);
+  deleteTask(taskId: string): Observable<string> {
+    return this.http.delete<string>(`${this.apiUrl}/task/${taskId}`);
   }
 }

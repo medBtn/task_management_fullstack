@@ -13,6 +13,7 @@ import { User } from '../../../core/models/user.model';
 import { UserStorageService } from '../../../core/services/auth/user-storage.service';
 import { TaskService } from '../../../core/services/task.service';
 import { UserService } from '../../../core/services/user.service';
+import { errorAlert, successAlert } from '../../../core/models/sweet-alert.model';
 
 @Component({
   selector: 'app-task-form',
@@ -26,7 +27,7 @@ export class taskFormComponent implements OnInit {
   taskForm!: FormGroup;
   isLoading = false;
 
-  state = {...PAGIGNATION};
+  state = { ...PAGIGNATION };
   users: User[] = [];
 
   constructor(
@@ -87,6 +88,7 @@ export class taskFormComponent implements OnInit {
       this.taskService.updateTask(taskData).subscribe(
         () => {
           this.isLoading = false;
+          successAlert('Success', 'The task has been successfully inserted.');
           this.activeModal.close();
         },
         (error: any) => {
@@ -96,11 +98,13 @@ export class taskFormComponent implements OnInit {
     } else {
       this.taskService.createTask(taskData).subscribe(
         () => {
-          this.activeModal.close();
           this.isLoading = false;
+          successAlert('Success', 'The task has been successfully inserted.');
+          this.activeModal.close();
         },
         (error: any) => {
           this.isLoading = false;
+          errorAlert('Error', error);
           console.error('Error creating task:', error);
         }
       );

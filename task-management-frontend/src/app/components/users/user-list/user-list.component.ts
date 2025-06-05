@@ -7,19 +7,24 @@ import { PAGIGNATION } from '../../../core/models/pagignation';
 import { User } from '../../../core/models/user.model';
 import { UserService } from '../../../core/services/user.service';
 import { UserFormComponent } from '../user-form/user-form.component';
-
+import {
+  confirmDelete,
+  errorAlert,
+  successAlert,
+} from '../../../core/models/sweet-alert.model';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-user-list',
-  imports: [CommonModule, RouterModule, NgbPagination,FormsModule],
+  imports: [CommonModule, RouterModule, NgbPagination, FormsModule],
   templateUrl: './user-list.component.html',
   styleUrl: './user-list.component.scss',
 })
 export class UserListComponent {
-  state = {...PAGIGNATION};
+  state = { ...PAGIGNATION };
 
   users: User[] = [];
-  loading = false;
+  isLoading = false;
 
   constructor(
     private userService: UserService,
@@ -31,17 +36,18 @@ export class UserListComponent {
   }
 
   loadUsers(): void {
-    this.loading = true;
+    this.isLoading = true;
     this.userService.searchUsers(this.state).subscribe(
       (users: any) => {
-        this.users = users.content;this.state.totalRecords = users.totalElements;
+        this.users = users.content;
+        this.state.totalRecords = users.totalElements;
         this.loadPage();
         console.log('users = ', users);
-        this.loading = false;
+        this.isLoading = false;
       },
       (error: any) => {
-        this.loading = false;
-        console.error('Error loading users:', error);
+        this.isLoading = false;
+        console.error('Error isLoading users:', error);
       }
     );
   }
@@ -70,18 +76,22 @@ export class UserListComponent {
     // reload data
     this.loadUsers();
   }
-  deleteUser(userId: number): void {
-    if (confirm('Are you sure you want to delete this user?')) {
-      this.userService.deleteUser(userId).subscribe(
-        () => {
-          this.users = this.users.filter((user) => user.id !== userId);
-        },
-        (error: any) => {
-          console.error('Error deleting user:', error);
-        }
-      );
-    }
+
+  deleteUser(user: User) {
+    confirmDelete(user.username).then((confirmed) => {
+      if (confirmed) {
+        this.userService.deleteUser(user.id!).subscribe({
+          next: (res) => {
+            successAlert('Success', 'Delete successfull');
+          },
+          error: (err) => {
+            errorAlert('Error', err);
+          },
+        });
+      }
+    });
   }
+
   openModal(user?: User) {
     const modalRef = this.modalService.open(UserFormComponent, {
       size: 'md',

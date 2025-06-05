@@ -33,7 +33,6 @@
               }
             ],
             "styles": [
-              "node_modules/boxicons/css/boxicons.min.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/assets/styles/custom.scss",
               "src/styles.scss"
