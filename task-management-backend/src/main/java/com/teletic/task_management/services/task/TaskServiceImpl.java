@@ -41,10 +41,10 @@ public class TaskServiceImpl implements TaskService {
 
     }
 
-    public Task updateTask(Task task) {
+    public Task updateTask(TaskRequest task) {
         Optional<Task> taskOptional = taskRepository.findById(task.getId());
-        User assignedTo = userRepository.findById(task.getAssignedTo().getId()).orElse(null);
-        User createdBy = userRepository.findById(task.getCreatedBy().getId()).orElse(null);
+        User assignedTo = userRepository.findById(task.getAssignedTo()).orElse(null);
+        User createdBy = userRepository.findById(task.getCreatedBy()).orElse(null);
         if (taskOptional.isPresent()) {
             Task taskToUpdate = taskOptional.get();
             taskToUpdate.setTitle(task.getTitle());

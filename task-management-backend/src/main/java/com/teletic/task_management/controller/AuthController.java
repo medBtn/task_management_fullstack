@@ -130,9 +130,9 @@ public class AuthController {
     }
 
     @DeleteMapping(path = "/user/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
+    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
         authService.deleteUserById(id);
-        return ResponseEntity.ok("User deleted successfully.");
+        return ResponseEntity.ok(id);
     }
 
     @GetMapping(path = "/users")

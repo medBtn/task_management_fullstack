@@ -13,7 +13,7 @@ public interface TaskService {
 
     Task createTask(TaskRequest taskRequest);
 
-    Task updateTask(Task user);
+    Task updateTask(TaskRequest task);
 
     Page<TaskDto> searchTasks(String searchTerm, Pageable pageable);
 

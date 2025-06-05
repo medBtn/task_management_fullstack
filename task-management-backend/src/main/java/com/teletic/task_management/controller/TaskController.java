@@ -48,7 +48,7 @@ public class TaskController {
     }
 
     @PutMapping(path = "task")
-    public ResponseEntity<Task> updateTask(@RequestBody Task updatedTask) {
+    public ResponseEntity<Task> updateTask(@RequestBody TaskRequest updatedTask) {
         Task savedTask = taskService.updateTask(updatedTask);
         if (savedTask != null) {
             return ResponseEntity.ok(savedTask);
@@ -58,9 +58,9 @@ public class TaskController {
     }
 
     @DeleteMapping("/task/{id}")
-    public ResponseEntity<String> deleteTask(@PathVariable Long id) {
+    public ResponseEntity<?> deleteTask(@PathVariable Long id) {
         taskService.deleteTaskById(id);
-        return ResponseEntity.ok("Task deleted successfully.");
+        return ResponseEntity.ok(id);
     }
 
     @GetMapping(path = "/tasks")

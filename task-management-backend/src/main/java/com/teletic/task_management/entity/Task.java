@@ -2,6 +2,9 @@ package com.teletic.task_management.entity;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import com.teletic.task_management.dto.TaskDto;
 
 import jakarta.persistence.Column;
@@ -37,6 +40,7 @@ public class Task {
 
     @ManyToOne
     @JoinColumn(name = "assigned_to")
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private User assignedTo;
 
     @ManyToOne
