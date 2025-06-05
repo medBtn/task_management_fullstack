@@ -6,5 +6,5 @@ export const PAGIGNATION = {
     totalRecords: 0,
     searchTerm: '',
     sortColumn: 'id',
-    sortDirection: 'asc',
+    sortDirection: 'desc',
 }

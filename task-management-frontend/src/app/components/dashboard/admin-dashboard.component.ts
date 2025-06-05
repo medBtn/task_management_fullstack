@@ -6,9 +6,9 @@ import { User } from '../../core/models/user.model';
 import { HeaderComponent } from '../../layout/header/header.component';
 import { TabNavigationComponent, TabItem } from '../../layout/tab-navigation/tab-navigation.component';
 import { UserStorageService } from '../../core/services/auth/user-storage.service';
-import { EmptyStateComponent } from '../tasks/empty-state/empty-state.component';
 import { TaskListComponent } from '../tasks/task-list/task-list.component';
 import { UserListComponent } from '../users/user-list/user-list.component';
+import { MyTaskComponent } from "../tasks/my-task/my-task.component";
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -17,11 +17,11 @@ import { UserListComponent } from '../users/user-list/user-list.component';
     CommonModule,
     RouterModule,
     HeaderComponent,
-    EmptyStateComponent,
     TabNavigationComponent,
     TaskListComponent,
-    UserListComponent
-  ],
+    UserListComponent,
+    MyTaskComponent
+],
   templateUrl: './admin-dashboard.component.html',
   styleUrls: ['./admin-dashboard.component.scss'],
 })

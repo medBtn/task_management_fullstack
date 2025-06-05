@@ -18,7 +18,7 @@ export class UserFormComponent implements OnInit {
   @Input() user!: User;
   userForm!: FormGroup;
   isEditMode = false;
-  loading = false;
+  isLoading = false;
 
   constructor(
     private fb: FormBuilder,
@@ -51,29 +51,29 @@ export class UserFormComponent implements OnInit {
       return;
     }
 
-    this.loading = true;
+    this.isLoading = true;
     const userData = this.userForm.value;
 
     if (this.user) {
       userData.id = this.user.id;
       this.userService.updateUser(userData).subscribe(
         () => {
-          this.loading = false;
+          this.isLoading = false;
           this.activeModal.close()
         },
         (error:any) => {
-          this.loading = false;
+          this.isLoading = false;
           console.error('Error updating user:', error);
         }
       );
     } else {
       this.userService.createUser(userData).subscribe(
         () => {
-          this.loading = false;
+          this.isLoading = false;
           this.activeModal.close()
         },
         (error:any) => {
-          this.loading = false;
+          this.isLoading = false;
           console.error('Error creating user:', error);
         }
       );

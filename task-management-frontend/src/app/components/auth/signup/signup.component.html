@@ -15,7 +15,12 @@
           <label  class="form-label">Password</label>
           <input type="password" formControlName="password" class="form-control">
         </div>
-        <button type="submit" (click)="onSubmit()" class="btn btn-primary">Submit</button>
+        <button type="submit" (click)="onSubmit()" class="btn btn-primary">
+      @if(isLoading){
+      <span class="fas fa-spinner fa-spin"></span>
+      }
+      Submit
+    </button>
       </form>
     </div>
     <div class="col">

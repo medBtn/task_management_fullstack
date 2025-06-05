@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Task } from '../models/task.model';
 import { environment } from '../../../environments/environment';
+import { UserStorageService } from './auth/user-storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +17,19 @@ export class TaskService {
   searchTasks(state: any): Observable<any[]> {
     return this.http.get<any[]>(
       `${this.apiUrl}/tasks` +
+        `?page=${state.pageNumber - 1}` +
+        `&size=${state.pageSize}` +
+        `&sort=${state.sortColumn},${state.sortDirection}` +
+        (state.searchTerm ? `&searchTerm=${state.searchTerm}` : ``)
+    );
+  }
+
+  getAssignedTask(state: any): Observable<any[]> {
+    const userId = UserStorageService.getUserId();
+    console.log('assignedtaskuserid:', userId);
+
+    return this.http.get<any[]>(
+      `${this.apiUrl}/assigned/${userId}` +
         `?page=${state.pageNumber - 1}` +
         `&size=${state.pageSize}` +
         `&sort=${state.sortColumn},${state.sortDirection}` +

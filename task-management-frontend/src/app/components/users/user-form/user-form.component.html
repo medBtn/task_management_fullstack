@@ -63,6 +63,11 @@
 <div class="modal-footer">
   <div class="d-flex justify-content-end gap-3">
     <button type="button" class="btn btn-outline-secondary" (click)="activeModal.close()">Close</button>
-    <button type="submit" (click)="onSubmit()" [disabled]="!userForm.valid" class="btn btn-primary">Submit</button>
+    <button type="submit" (click)="onSubmit()" [disabled]="!userForm.valid || isLoading" class="btn btn-primary">
+      @if(isLoading){
+      <span class="fas fa-spinner fa-spin"></span>
+      }
+      Submit
+    </button>
   </div>
 </div>

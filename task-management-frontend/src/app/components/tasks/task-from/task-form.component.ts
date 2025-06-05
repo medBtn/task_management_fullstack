@@ -1,14 +1,18 @@
-import { CommonModule } from "@angular/common";
-import { Component, OnInit, Input } from "@angular/core";
-import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { PAGIGNATION } from "../../../core/models/pagignation";
-import { Task } from "../../../core/models/task.model";
-import { User } from "../../../core/models/user.model";
-import { UserStorageService } from "../../../core/services/auth/user-storage.service";
-import { TaskService } from "../../../core/services/task.service";
-import { UserService } from "../../../core/services/user.service";
-
+import { CommonModule } from '@angular/common';
+import { Component, OnInit, Input } from '@angular/core';
+import {
+  ReactiveFormsModule,
+  FormGroup,
+  FormBuilder,
+  Validators,
+} from '@angular/forms';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { PAGIGNATION } from '../../../core/models/pagignation';
+import { Task } from '../../../core/models/task.model';
+import { User } from '../../../core/models/user.model';
+import { UserStorageService } from '../../../core/services/auth/user-storage.service';
+import { TaskService } from '../../../core/services/task.service';
+import { UserService } from '../../../core/services/user.service';
 
 @Component({
   selector: 'app-task-form',
@@ -20,16 +24,16 @@ import { UserService } from "../../../core/services/user.service";
 export class taskFormComponent implements OnInit {
   @Input() task!: Task;
   taskForm!: FormGroup;
-  loading = false;
+  isLoading = false;
 
-  state = PAGIGNATION;
+  state = {...PAGIGNATION};
   users: User[] = [];
 
   constructor(
     private fb: FormBuilder,
     private taskService: TaskService,
     public activeModal: NgbActiveModal,
-    private userService: UserService,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
@@ -42,16 +46,16 @@ export class taskFormComponent implements OnInit {
   }
 
   loadUsers(): void {
-    this.loading = true;
+    this.isLoading = true;
     this.state.pageSize = 1000;
     this.userService.searchUsers(this.state).subscribe(
       (users: any) => {
         this.users = users.content;
-        this.loading = false;
+        this.isLoading = false;
       },
       (error: any) => {
-        this.loading = false;
-        console.error('Error loading users:', error);
+        this.isLoading = false;
+        console.error('Error isLoading users:', error);
       }
     );
   }
@@ -61,7 +65,7 @@ export class taskFormComponent implements OnInit {
       title: ['', [Validators.required, Validators.minLength(3)]],
       description: ['', [Validators.required, Validators.minLength(10)]],
       status: ['TODO', Validators.required],
-      assignedTo: [],
+      assignedTo: [Number],
     });
   }
 
@@ -71,29 +75,32 @@ export class taskFormComponent implements OnInit {
       return;
     }
 
-    this.loading = true;
+    this.isLoading = true;
     const taskData = this.taskForm.value;
+    taskData.assignedTo = Number(taskData.assignedTo);
     taskData.createdBy = UserStorageService.getUserId();
 
     if (this.task) {
       taskData.id = this.task.id;
+      console.log(taskData);
+
       this.taskService.updateTask(taskData).subscribe(
         () => {
-          this.loading = false;
+          this.isLoading = false;
           this.activeModal.close();
         },
         (error: any) => {
-          this.loading = false;
+          this.isLoading = false;
         }
       );
     } else {
       this.taskService.createTask(taskData).subscribe(
         () => {
           this.activeModal.close();
-          this.loading = false;
+          this.isLoading = false;
         },
         (error: any) => {
-          this.loading = false;
+          this.isLoading = false;
           console.error('Error creating task:', error);
         }
       );

@@ -39,7 +39,7 @@ export class UserService {
   }
 
   // Delete a user (admin only)
-  deleteUser(userId: string): Observable<void> {
+  deleteUser(userId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/user/${userId}`);
   }
 }

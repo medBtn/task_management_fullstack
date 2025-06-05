@@ -17,7 +17,7 @@ import { UserStorageService } from '../../../core/services/auth/user-storage.ser
 })
 export class LoginComponent {
   loginForm!: FormGroup;
-
+  isLoading = false;
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
@@ -39,6 +39,7 @@ export class LoginComponent {
   }
 
   onSubmit() {
+    this.isLoading = true;
     const username = this.loginForm.get('username')!.value;
     const password = this.loginForm.get('password')!.value;
 
@@ -49,6 +50,7 @@ export class LoginComponent {
         } else if (UserStorageService.isUserLoggedIn()) {
           this.router.navigateByUrl('user');
         }
+        this.isLoading = false;
       },
       (err: any) => {
         console.log(err);

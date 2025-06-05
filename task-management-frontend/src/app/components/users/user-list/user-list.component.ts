@@ -16,7 +16,7 @@ import { UserFormComponent } from '../user-form/user-form.component';
   styleUrl: './user-list.component.scss',
 })
 export class UserListComponent {
-  state = PAGIGNATION;
+  state = {...PAGIGNATION};
 
   users: User[] = [];
   loading = false;
@@ -70,7 +70,7 @@ export class UserListComponent {
     // reload data
     this.loadUsers();
   }
-  deleteUser(userId: string): void {
+  deleteUser(userId: number): void {
     if (confirm('Are you sure you want to delete this user?')) {
       this.userService.deleteUser(userId).subscribe(
         () => {

@@ -5,7 +5,7 @@
       type="search" class="form-control" placeholder="Search..." />
   </div>
   <button class="btn btn-primary" (click)="openModal()">
-    <i class="fas fa-task-plus me-2"></i>
+    <i class="fa-solid fa-plus me-2"></i>
     Add Task
   </button>
 </div>
@@ -33,12 +33,12 @@
           <td>{{ task.createdBy }}</td>
 
           <td>
-            <div class="d-flex gap-3">
+            <div class="d-flex gap-3 action-icons">
               <!-- <button class="btn btn-sm btn-outline-success" > -->
-              <i class='bx  bx-edit text-success fs-4' (click)="openModal(task)"></i>
+              <i class='fa-solid fa-pen-to-square text-success fs-4' (click)="openModal(task)"></i>
               <!-- </button> -->
               <!-- <button class="btn btn-sm btn-outline-danger"> -->
-              <i class='bx  bx-trash text-danger fs-4' (click)="deleteTask(task.id!)"></i>
+              <i class='fa-solid fa-trash-can text-danger fs-4' (click)="deleteTask(task.id!)"></i>
               <!-- </button> -->
             </div>
           </td>

@@ -1,21 +1,34 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { NgbPagination, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbModal,
+  NgbPagination,
+  NgbDropdownModule,
+} from '@ng-bootstrap/ng-bootstrap'; // Add NgbDropdownModule
+import { TaskStatusBadgeComponent } from '../task-status-badge/task-status-badge.component';
 import { PAGIGNATION } from '../../../core/models/pagignation';
 import { Task } from '../../../core/models/task.model';
 import { TaskService } from '../../../core/services/task.service';
 import { taskFormComponent } from '../task-from/task-form.component';
-import { TaskStatusBadgeComponent } from '../task-status-badge/task-status-badge.component';
+import { EmptyStateComponent } from '../empty-state/empty-state.component';
 
 @Component({
-  selector: 'app-task-list',
-  imports: [CommonModule, RouterModule, NgbPagination,FormsModule,TaskStatusBadgeComponent],
-  templateUrl: './task-list.component.html',
-  styleUrl: './task-list.component.scss',
+  selector: 'app-my-task',
+  imports: [
+    CommonModule,
+    RouterModule,
+    NgbPagination,
+    FormsModule,
+    TaskStatusBadgeComponent,
+    NgbDropdownModule,
+    EmptyStateComponent,
+  ], // Add NgbDropdownModule here
+  templateUrl: './my-task.component.html',
+  styleUrl: './my-task.component.scss',
 })
-export class TaskListComponent {
+export class MyTaskComponent implements OnInit {
   state = {...PAGIGNATION};
 
   tasks: Task[] = [];
@@ -32,9 +45,10 @@ export class TaskListComponent {
 
   loadTasks(): void {
     this.loading = true;
-    this.taskService.searchTasks(this.state).subscribe(
+    this.taskService.getAssignedTask(this.state).subscribe(
       (tasks: any) => {
-        this.tasks = tasks.content;this.state.totalRecords = tasks.totalElements;
+        this.tasks = tasks.content;
+        this.state.totalRecords = tasks.totalElements;
         this.loadPage();
         console.log('tasks = ', tasks);
         this.loading = false;
@@ -70,18 +84,7 @@ export class TaskListComponent {
     // reload data
     this.loadTasks();
   }
-  deleteTask(taskId: string): void {
-    if (confirm('Are you sure you want to delete this task?')) {
-      this.taskService.deleteTask(taskId).subscribe(
-        () => {
-          this.tasks = this.tasks.filter((task) => task.id !== taskId);
-        },
-        (error: any) => {
-          console.error('Error deleting task:', error);
-        }
-      );
-    }
-  }
+
   openModal(task?: Task) {
     const modalRef = this.modalService.open(taskFormComponent, {
       size: 'md',
@@ -93,5 +96,21 @@ export class TaskListComponent {
     modalRef.result.then(() => {
       this.loadTasks();
     });
+  }
+
+  updateTaskStatus(task: Task, status: any): void {
+    if (!task) {
+      console.error('Task ID is undefined. Cannot update status.');
+      return;
+    }
+    task.status = status;
+    this.taskService.updateTask(task).subscribe(
+      () => {
+        this.loadTasks(); // Reload tasks to reflect the change
+      },
+      (error: any) => {
+        console.error('Error updating task status:', error);
+      }
+    );
   }
 }
